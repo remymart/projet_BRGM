@@ -1,13 +1,13 @@
-# -*- coding: utf-8 -*-
+```python
 import requests
 import json
 import pandas as pd
 import numpy as np
 import os
 import shutil
+```
 
-
-# +
+```python
 def sauvegarde_locale_stations(Npiezmin=10,Nech=20,Npage=1):
     """Sauivegarde en local toutes les infos correspondant à un échantillon de stations"""
     out=requests.get(f"https://hubeau.eaufrance.fr/api/v1/niveaux_nappes/stations?format=json&page={Npage}&size={Nech}")
@@ -48,13 +48,13 @@ def sauvegarde_locale(Npiezmin=10,Nech=20,Npage=1):
         print("Pas de création du dossier donnees, il existe peut être déja")
     sauvegarde_locale_stations(Npiezmin,Nech,Npage)
     sauvegarde_locale_chroniques()
+```
 
-
-# -
-
+```python
 sauvegarde_locale(Nech=100)
+```
 
-
+```python
 def table_stations():
     """Renvoie la table stations stockée localement si elle existe (servira plus tard de base pour une fonction qui donne la base en regardant si elle existe localement ou pas)"""
     try :
@@ -63,12 +63,13 @@ def table_stations():
         print("pas de fichier stations.csv")
         return 0
     return stations
+```
 
-
+```python
 table_stations()
+```
 
-
-# +
+```python
 def chronique(code_bss):
     """Récupère une chronique à partir du code bss en recoupant à travers les différentes base de données"""
     stations=table_stations()
@@ -80,8 +81,8 @@ def chronique(code_bss):
         print(chronique)
     except :
         print("Il n'y a un probleme pour trouver la chronique")
-        
-        
-# -
+```
 
+```python
 chronique('08272X0745/PZ-')
+```

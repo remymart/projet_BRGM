@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import json
 import pandas as pd
@@ -15,7 +16,7 @@ def extract_levels(code_bss):
     doneejson=json.loads(out.text)
     data=pd.json_normalize(doneejson['data'])
     return data[['date_mesure','timestamp_mesure','niveau_nappe_eau','profondeur_nappe']]
-    
+
 #print(extract_levels("04454X0089/PK11.0"))# j'ai entré une aderesse bss de dessus 
 table = extract_levels("04454X0089/PK11.0")
 # print((table['date_mesure'][1]).split('-')[0])
@@ -63,7 +64,7 @@ def regularize_timestep(table, timestep = 'day', filling_method = 'zero_padding'
 		time_array = np.array(result_time)
 		depth_array = np.array(result_depths)
 		return time_array,depth_array
-		
+
 
 # def average_year(table,counter,year):
 # 	mean_counter = 1
