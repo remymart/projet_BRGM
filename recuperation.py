@@ -1,13 +1,9 @@
-```python
 import requests
 import json
 import pandas as pd
-import numpy as np
 import os
 import shutil
-```
 
-```python
 def sauvegarde_locale_stations(Npiezmin=10,Nech=20,Npage=1):
     """Sauivegarde en local toutes les infos correspondant à un échantillon de stations"""
     out=requests.get(f"https://hubeau.eaufrance.fr/api/v1/niveaux_nappes/stations?format=json&page={Npage}&size={Nech}")
@@ -20,7 +16,7 @@ def sauvegarde_locale_chroniques():
     """Met à jour les chroniques à partir de la base de données 'stations' """
     stations=pd.read_csv('donnees/stations.csv',index_col=0)
     try:
-        shutil.rmtree('donnees/chroniques') # on vide le dossier chroniques
+        shutil.rmtree('donnees/chroniques') # on vide le dossier chroniques
         print("Dossier donnees/chroniques enlevé")
     except :
         print("On ne peut pas enlever le dossier donnees/chroniques, peut être qu'il n'existe pas")
@@ -48,13 +44,7 @@ def sauvegarde_locale(Npiezmin=10,Nech=20,Npage=1):
         print("Pas de création du dossier donnees, il existe peut être déja")
     sauvegarde_locale_stations(Npiezmin,Nech,Npage)
     sauvegarde_locale_chroniques()
-```
 
-```python
-#sauvegarde_locale(Nech=100)
-```
-
-```python
 def table_stations():
     """Renvoie la table stations stockée localement si elle existe (servira plus tard de base pour une fonction qui donne la base en regardant si elle existe localement ou pas)"""
     try :
@@ -63,18 +53,12 @@ def table_stations():
         print("pas de fichier stations.csv")
         return 0
     return stations
-```
 
-```python
-table_stations()
-```
-
-```python
 def extract_chronique_locale(code_bss):
     """Récupère une chronique à partir du code bss en recoupant à travers les différentes base de données"""
     stations=table_stations()
     if type(stations)=='int' : 
-        return 0 # ca a déja affiché l'erreur
+        return 0 # ca a déja affiché l'erreur
     try :
         index=stations[stations['code_bss']==code_bss].index.to_numpy()[0]
         chronique=pd.read_csv(f'donnees/chroniques/{index}.csv',index_col=0)
@@ -82,13 +66,7 @@ def extract_chronique_locale(code_bss):
     except :
         print("Il n'y a un probleme pour trouver la chronique")
         return 0
-```
-
-```python
-extract_chronique_locale('04138X0067/PK13.0')
-```
-
-```python
+    
 def extract_chronique_remote(code_bss):
     """
     Extrait les niveaux pour la balise quicorrespond au code BSS fourni
@@ -100,21 +78,14 @@ def extract_chronique_remote(code_bss):
     doneejson=json.loads(out.text)
     data=pd.json_normalize(doneejson['data'])
     return data
-```
 
-```python
 def extract_chronique(code_bss):
     """Cette fonction combine toutes les précédentes et lorsqu'on lui donne un code bss va d'abord chercher en local puis sur le serveur si la chronique voulue n'est pas en local."""
     try :
         chronique_locale=extract_chronique_locale(code_bss)
-        chronique_locale['code_bss'] # l'idée est de générer une erreur si jamais on ne récupère pas un dataframe
+        chronique_locale['code_bss'] # l'idée est de générer une erreur si jamais on ne récupère pas un dataframe
         print(f"{code_bss} extracted from local storage")
         return chronique_locale
     except :
         print(f"{code_bss} extracted from server")
         return(extract_chronique_remote(code_bss))
-```
-
-```python
-extract_chronique('04138X0067/PK13.0')
-```
