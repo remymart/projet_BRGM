@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import requests
 import json
 import pandas as pd
@@ -5,8 +6,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from recuperation import *
-################################################################################################################################################################
-
+""
 ##1ere partie : ici le but est de combler les trous de données (pour faire en sorte qu'il n'y en ai pas de plus d'une semaine), puis de labesliser les données
 ## en fonction de si ces données sont créées, aberrantes ou d'origine.
 
@@ -111,7 +111,7 @@ def label_and_interpol_df(df, tolerance = 7):
                                                                         #2 si elle a été créée mais est totalement inexploitable, juste pour remplir un trou
 
 
-################################################################################################################################################################
+""
 def mean_std_df(df):
     """Cette fonction permet à partir d'un dataframe labelisé de calculer moyenne et écart-type mais 
     uniquement sur les valeurs qui ne sont pas labelisé par 2, cad jugée pertinantes """
@@ -158,7 +158,7 @@ def filtre_ecart_type_and_normalize(df, normalize = True):
     return(niveau)
 
 
-def filtre_valeur_aberrante(df):
+def filtre_valeur_aberrante(df, normalize = True):
     """Cette fonction filtre les signaux dont certaines valeurs rares sont abusivement aberante donc supprimée car trop loin de la moyenne. 
     Cette fonction renvoie un dataframe avec 5 colonnes dans l'ordre : code_bss ; niveau_nappe_eau (qui a été corrigé et normalisé) ; date_mesure ; timestamp_mesure ; label_new_value.
     On peut aussi en option normaliser le signal"""
@@ -167,7 +167,7 @@ def filtre_valeur_aberrante(df):
     labelisation = df['label_new_value'].to_numpy().copy()
     code_bss = df['code_bss'].to_numpy().copy()
     code = code_bss[0]
-    new_levels = filtre_ecart_type_and_normalize(df)
+    new_levels = filtre_ecart_type_and_normalize(df, normalize)
     
     new_df = pd.DataFrame(columns=['code_bss','niveau_nappe_eau', 'date_mesure', 'timestamp_mesure', 'label_new_value'])
 
