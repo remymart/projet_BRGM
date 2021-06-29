@@ -39,7 +39,7 @@ def find_holes(df, tolerance = 7):
                 
                 for j in range(duree//tol_nb_day):
                     new_date = date + (j+1)*tol_nb_day
-                    new_level = level[i] + ((j+1)*tol_nb_day/duree)*(level[i+1]-level[i])
+                    new_level = levels[i] + ((j+1)*tol_nb_day/duree)*(levels[i+1]-levels[i])
                     if duree//tol_nb_day == 1:
                         label = 1
                     elif duree//tol_nb_day > 1:
