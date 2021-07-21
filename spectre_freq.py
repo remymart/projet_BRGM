@@ -6,17 +6,16 @@ import matplotlib.pyplot as plt
 from datetime import date, timedelta
 from recuperation import *
  
-table = extract_chronique("09433X0162%2FPIEZ")
 
 
 def string_date_to_date_date(string):
-	""" la fonction convertit un string sous la forme rencontrée dans les chronique en une date du module datetime
+	""" la fonction convertit une date exprimée en format string sous la forme rencontrée dans les chronique en une date du module datetime de python
 		arguments : date sous la forme décrite ci dessus (string)
 		renvoie : la meme date sous le format datetime"""
 	list = string.split('-')
 	return date(int(list[0]),int(list[1]),int(list[2]))
 
-def regularize_timestep(table,filling_method = 'zero_padding'):
+def regularize_timestep(table,filling_method = 'linear'):
 	"""la fonction régularise les pas de temps : elle parcourt jour par jour le tableau et ajoute une profondeur aux jours qui manquent
 		arguments : 1)table: chronique sous la forme d'un tableau pandas
 					2)filling_method : méthode de remplissage à choisir parmi 3 méthodes:
@@ -72,8 +71,8 @@ def regularize_timestep(table,filling_method = 'zero_padding'):
 				temp_depth=[]
 				temp_time=[]
 				
-				h0 = table['niveau_nappe_eau'][counter]
-				h1 = table['niveau_nappe_eau'][counter + 1]
+				h0 = float(table['niveau_nappe_eau'][counter])
+				h1 = float(table['niveau_nappe_eau'][counter + 1])
 				t0 = time
 				t1 = (string_date_to_date_date(table['date_mesure'][counter+1]) - date_zero).days
 				n = diff
@@ -93,12 +92,11 @@ def regularize_timestep(table,filling_method = 'zero_padding'):
 		
 		return table
 			
-truc = regularize_timestep(table, 'linear')
 				
 def standardize(depth_array):
 	""" centre et réduit les profondeurs pour avoir une meilleure vision en analyse fréquentielle
 		argument : tableau array des profondeurs
-		renvoie : le tableau array, mais centré réduit."""
+		renvoie : le tableau array, mais la colonne des profondeurs est centrée réduite."""
 
 	std = np.std(depth_array)
 	mean = np.mean(depth_array)
@@ -131,7 +129,7 @@ def show_spectrum(table, filter = 'none', f_coupure = 0.1):
 	if filter == 'none':
 		plt.plot(array_freq,np.abs(array_spectrum))
 	if filter == 'passe_bas':
-		array_spectrum = passe_bas(0.1,array_freq,array_spectrum)
+		array_spectrum = passe_bas(f_coupure,array_freq,array_spectrum)
 		plt.plot(array_freq,np.abs(array_spectrum))
 	plt.xlabel("fréquence en jour -1")
 	plt.ylabel("amplitude")
@@ -154,8 +152,6 @@ def filtrage(table, filter='passe_bas',freq_coupure = 0.1) :
 		array_depth = np.fft.ifft(array_spectrum)
 		table['niveau_nappe_eau'] = array_depth
 	return table
-
-
 
 
 
