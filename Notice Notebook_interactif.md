@@ -28,7 +28,7 @@ La bibliothèque contenue dans Notebook_interactif.py contient la fonction visua
 
 # Les caractéristique de la carte :
 
-   Les stations sont ensuites représentées sur une carte de la France par des points de couleur. Les stations aux couleurs les plus rouges sont celles qui ont le moins de mesures à leur actif, les plus vertes sont au contraires les stations avec de nombreuses mesures. L'échelle de couleur est propre aux stations séléctionnées initialement.
+   Les stations sont ensuites représentées sur une carte de la France par des points de couleur. Les stations aux couleurs les plus rouges sont celles qui ont le moins de mesures à leur actif, les plus vertes sont au contraire les stations avec de nombreuses mesures. L'échelle de couleur est propre aux stations séléctionnées initialement.
     
    Il est possible de zoomer et de se déplacer sur la carte. De plus, en passant la souris sur une station, le code BSS de celle-ci est affiché. Lorsque plusieurs stations se superposent on affiche les codes de toutes les stations sous la souris à la suite. Il est alors recommandé de zoomer pour plus de précision.
 
