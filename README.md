@@ -1,5 +1,8 @@
 # projet_BRGM
 
+```python
+## Pierre-Louis BINACHON, Pierre CHAPEL, Arthur HOCHEDEZ, Rémy MARTINEZ (Mines ParisTech)
+```
 
 # Données piézométriques
 ## Contexte
@@ -22,9 +25,7 @@
    
     3- Enfin, une approche complémentaire peut être de considérer non plus la station seule, mais un ensemble de station. Cela revient à considérer que l'on observe un même objet (un aquifère) à plusieurs endroits. On peut alors se poser la question de la propagation d'un signal (l'effet de la pluie par exemple) dans cet aquifère, et travailler sur la propagation, la distortion du signal.
    
-    Rendu ?
-    30 juin : forum
-   
+ 
 ## Comment évaleur la réussite du projet ?
 La réussite du projet peut être évaluer sur différents plans (sans ordre de préférence) :
     * capacité à produire un utilitaire pour accéder aux données (fonction, classe, exécutable, notebook,...)
@@ -32,6 +33,8 @@ La réussite du projet peut être évaluer sur différents plans (sans ordre de 
     * capacité à exposer les méthodes de détections d'anomalies, de les documenter, de proposer des solutions de contournement, de correction,...
     * capacité à exposer des méthodes d'analyse du signal
     * originalité des solutions/approches, robustesses, passage à l'échelle possible, capacité à être automatisé, etc.
-   
- ## Suivi de projet :
-    * pour une prochaine réunion : proposition de faire une sorte de rapport d'étonnement : facilité/difficulté à prendre en charge en charge les api's, faire qq graphs, des stats, des cartes, regarder un signal sur quelques stations, etc. sont des approches possibles.
+
+## Ouverture des fichiers
+Le rendu correspond àun ensemble de bibliothèques codées en python et de jupyter notebook. Seuls les fichiers en .md sont stockés (pas les .ipynb qui sont modifiés à chaque éxecution), pour faire le lien entre les deux il faut posséder l'exension jupytext.
+
+Chaque partie du travail s'accompagne d'une notice décrivant l'utilité générale et entrant parfois dans le détail des différentes fonctions.
