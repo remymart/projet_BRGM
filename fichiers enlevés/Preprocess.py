@@ -66,10 +66,8 @@ def timestamp_to_date(liste):
     """Convertie une liste de timestamp en datetime"""
     new_liste = []
     for element in liste:
-        new_element = pd.to_datetime(element*1000000)
-        new_date = new_element.date()
-        #new_date = str(new_date.year)+'-'+str(new_date.month)+'-'+str(new_date.day)
-        new_liste.append(new_date)
+        new_element = pd.to_datetime(element)
+        new_liste.append(new_element)
     return(new_liste)    
 
 
@@ -165,7 +163,7 @@ def filtre_valeur_aberrante(df, normalize = True):
     Cette fonction renvoie un dataframe avec 5 colonnes dans l'ordre : code_bss ; niveau_nappe_eau (qui a été corrigé et normalisé) ; date_mesure ; timestamp_mesure ; label_new_value.
     On peut aussi en option normaliser le signal"""
     dates_ts = df['timestamp_mesure'].to_numpy().copy()
-    dates = df['date_mesure'].to_numpy().copy()
+    dates = pd.to_datetime(df['date_mesure']).to_numpy().copy()
     labelisation = df['label_new_value'].to_numpy().copy()
     code_bss = df['code_bss'].to_numpy().copy()
     code = code_bss[0]
@@ -176,9 +174,8 @@ def filtre_valeur_aberrante(df, normalize = True):
     for i, new_level in enumerate(new_levels):
         new_date_ts = dates_ts[i]
         new_date = dates[i]
-        new_date = str(new_date.year)+'-'+str(new_date.month)+'-'+str(new_date.day)
         label = labelisation[i]
         new_row = pd.DataFrame(data = np.array([[code, new_level, new_date, new_date_ts, label]]), columns = ['code_bss', 'niveau_nappe_eau', 'date_mesure', 'timestamp_mesure', 'label_new_value'])
         new_df = pd.concat([new_df, new_row], ignore_index=True)
-    new_df['niveau_nappe_eau']=new_df['niveau_nappe_eau'].astype(float)
+    
     return(new_df)
